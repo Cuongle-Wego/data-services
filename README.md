@@ -72,12 +72,19 @@ graph TB
 Retrieve comprehensive hotel information including details and reviews.
 
 ```http
-GET /api/hotel/{hotel_id}
+POST /api/hotel
+```
+
+#### Request Body
+```json
+{
+  "hotel_id": 123
+}
 ```
 
 #### Parameters
-| Parameter | Type | Description |
-|-----------|------|-------------|
+| Field | Type | Description |
+|-------|------|-------------|
 | `hotel_id` | Integer | Unique identifier for the hotel |
 
 #### Response Format
@@ -150,7 +157,9 @@ GET /api/hotel/{hotel_id}
 
 4. **Verify the service**
    ```bash
-   curl http://localhost:8080/api/hotel/123456
+   curl -X POST http://localhost:8080/api/hotel \
+     -H "Content-Type: application/json" \
+     -d '{"hotel_id": 123456}'
    ```
 
 The service will start on `http://localhost:8080` by default.

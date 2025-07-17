@@ -3,6 +3,7 @@ package com.onepiece.data_services.controller;
 import com.onepiece.data_services.model.HotelResponse;
 import com.onepiece.data_services.model.HotelInfo;
 import com.onepiece.data_services.model.HotelDetails;
+import com.onepiece.data_services.model.HotelRequest;
 import com.onepiece.data_services.model.ReviewsResponse;
 import com.onepiece.data_services.service.ReviewService;
 import com.onepiece.data_services.service.WegoHotelService;
@@ -27,8 +28,10 @@ public class HotelController {
         this.wegoHotelService = wegoHotelService;
     }
 
-    @GetMapping("/hotel/{hotel_id}")
-    public HotelResponse getHotelData(@PathVariable Integer hotel_id) {
+    @PostMapping("/hotel")
+    public HotelResponse getHotelData(@RequestBody HotelRequest request) {
+        Integer hotel_id = request.getHotel_id();
+        
         // Fetch real reviews from external API
         List<String> reviews = reviewService.getHotelReviews(hotel_id);
 
