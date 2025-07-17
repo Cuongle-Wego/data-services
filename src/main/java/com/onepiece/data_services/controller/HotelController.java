@@ -4,9 +4,12 @@ import com.onepiece.data_services.model.HotelResponse;
 import com.onepiece.data_services.model.HotelInfo;
 import com.onepiece.data_services.model.HotelDetails;
 import com.onepiece.data_services.model.HotelRequest;
+import com.onepiece.data_services.model.HotelPricingRequest;
+import com.onepiece.data_services.model.PricingRatesResponse;
 import com.onepiece.data_services.model.ReviewsResponse;
 import com.onepiece.data_services.service.ReviewService;
 import com.onepiece.data_services.service.WegoHotelService;
+import com.onepiece.data_services.service.HotelPricingService;
 import com.onepiece.data_services.mapper.HotelMapper;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +24,13 @@ public class HotelController {
     
     private final ReviewService reviewService;
     private final WegoHotelService wegoHotelService;
+    private final HotelPricingService hotelPricingService;
     
     @Autowired
-    public HotelController(ReviewService reviewService, WegoHotelService wegoHotelService) {
+    public HotelController(ReviewService reviewService, WegoHotelService wegoHotelService, HotelPricingService hotelPricingService) {
         this.reviewService = reviewService;
         this.wegoHotelService = wegoHotelService;
+        this.hotelPricingService = hotelPricingService;
     }
 
     @PostMapping("/hotel")
@@ -43,6 +48,11 @@ public class HotelController {
 
 
         return new HotelResponse(reviews, hotelInfo);
+    }
+    
+    @PostMapping("/hotel/pricing")
+    public PricingRatesResponse getHotelPricing(@RequestBody HotelPricingRequest request) {
+        return hotelPricingService.getHotelPricing(request);
     }
     
 }
